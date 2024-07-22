@@ -11,6 +11,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AsterixService {
     private final CharacterRepo characterRepo;
+    private final IdService idService;
 
     public List<Character> findAllCharacters() {
         return characterRepo.findAll();
@@ -25,7 +26,8 @@ public class AsterixService {
 
     public Character saveCharacter(NoIdCharacterDto character) {
         Character characterToSave = Character.builder()
-                .id(String.valueOf(findAllCharacters().size() + 1))
+                .id(idService.randomId())
+//                .id(String.valueOf(findAllCharacters().size() + 1))
                 .name(character.name())
                 .age(character.age())
                 .profession(character.profession())
