@@ -67,18 +67,29 @@ class AsterixServiceTest {
     @Test
     void updateCharacterWithIdTest() {
         //GIVEN
-        NoIdCharacterDto characterDto = new NoIdCharacterDto(null, 35,"Holzfäller");
+        NoIdCharacterDto characterDto = new NoIdCharacterDto("Asterix", 35,"Holzfäller");
         Character character = new Character("1","Asterix",35,"Krieger");
         Character updatedCharacter = new Character("1",characterDto.name(),characterDto.age(),characterDto.profession());
-        if (updatedCharacter.age() == 0) {
-            updatedCharacter = updatedCharacter.withAge(character.age());
-        }
-        if (updatedCharacter.name() == null) {
-            updatedCharacter = updatedCharacter.withName(character.name());
-        }
-        if (updatedCharacter.profession() == null) {
-            updatedCharacter = updatedCharacter.withProfession(character.profession());
-        }
+        when(characterRepo.findById("1")).thenReturn(Optional.of(character));
+        when(characterRepo.save(updatedCharacter)).thenReturn(updatedCharacter);
+
+        //WHEN
+        Character actual = asterixService.updateCharacterWithId("1", characterDto);
+
+        //THEN
+        Character expected = new Character("1","Asterix",35,"Holzfäller");
+        verify(characterRepo).findById("1");
+        verify(characterRepo).save(updatedCharacter);
+        assertEquals(expected, actual);
+
+    }
+
+    @Test
+    void updateCharacterWithIdTest_withIncompleteDto() {
+        //GIVEN
+        NoIdCharacterDto characterDto = new NoIdCharacterDto(null, 35,"Holzfäller");
+        Character character = new Character("1","Asterix",35,"Krieger");
+        Character updatedCharacter = new Character("1",character.name(),characterDto.age(),characterDto.profession());
         when(characterRepo.findById("1")).thenReturn(Optional.of(character));
         when(characterRepo.save(updatedCharacter)).thenReturn(updatedCharacter);
 
