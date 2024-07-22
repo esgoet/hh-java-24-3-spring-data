@@ -26,13 +26,8 @@ public class AsterixController {
         return asterixService.deleteCharacterWithId(id);
     }
 
-//    @PutMapping("/{id}")
-//    public Character updateCharacter(@PathVariable String id, @RequestBody Character character) {
-//        Optional<Character> optionalCharacter = characterRepo.findById(id);
-//        optionalCharacter.ifPresent(characterToUpdate -> {
-//            characterRepo.save(character.withId(characterToUpdate.id()));
-//            return character.withId(characterToUpdate.id());
-//        });
-//        return null;
-//    }
+    @PutMapping("/{id}")
+    public Character updateCharacter(@PathVariable String id, @RequestBody Character character) {
+        return asterixService.updateCharacterWithId(id, character);
+    }
 }

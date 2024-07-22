@@ -34,4 +34,22 @@ public class AsterixService {
         }
         return null;
     }
+
+    public Character updateCharacterWithId(String id, Character character) {
+        Optional<Character> optionalCharacter = characterRepo.findById(id);
+        if (optionalCharacter.isPresent()) {
+            Character characterToUpdate = optionalCharacter.get();
+            if (character.age() == 0) {
+                character = character.withAge(characterToUpdate.age());
+            }
+            if (character.name() == null) {
+                character = character.withName(characterToUpdate.name());
+            }
+            if (character.profession() == null) {
+                character = character.withProfession(characterToUpdate.profession());
+            }
+            return characterRepo.save(character.withId(characterToUpdate.id()));
+        }
+        return null;
+    }
 }
