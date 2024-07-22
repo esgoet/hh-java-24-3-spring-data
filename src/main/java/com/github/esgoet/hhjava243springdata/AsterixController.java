@@ -17,7 +17,7 @@ public class AsterixController {
     }
 
     @PostMapping
-    public Character saveCharacter(@RequestBody Character character) {
+    public Character saveCharacter(@RequestBody CharacterCreationDto character) {
         return asterixService.saveCharacter(character);
     }
 
