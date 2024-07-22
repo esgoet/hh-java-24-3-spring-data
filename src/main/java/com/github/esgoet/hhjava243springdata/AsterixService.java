@@ -17,7 +17,7 @@ public class AsterixService {
         return characterRepo.findCharactersByAgeAfter(age);
     }
 
-    public Character getCharacterById(String id) {
+    public Character findCharacterById(String id) {
         if (characterRepo.findById(id).isPresent()) {
             return characterRepo.findById(id).get();
         }
@@ -35,13 +35,8 @@ public class AsterixService {
         return characterRepo.save(characterToSave);
     }
 
-    public Character deleteCharacterWithId(@PathVariable String id) {
-        Optional<Character> characterToDelete = characterRepo.findById(id);
-        if (characterToDelete.isPresent()) {
-            characterRepo.delete(characterToDelete.get());
-            return characterToDelete.get();
-        }
-        return null;
+    public void deleteCharacterWithId(@PathVariable String id) {
+        characterRepo.deleteById(id);
     }
 
     public Character updateCharacterWithId(String id, NoIdCharacterDto character) {
