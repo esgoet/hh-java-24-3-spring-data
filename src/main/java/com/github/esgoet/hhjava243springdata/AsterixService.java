@@ -16,7 +16,7 @@ public class AsterixService {
         return characterRepo.findAll();
     }
 
-    public Character saveCharacter(CharacterCreationDto character) {
+    public Character saveCharacter(NoIdCharacterDto character) {
         Character characterToSave = Character.builder()
                 .id(String.valueOf(findAllCharacters().size() + 1))
                 .name(character.name())
@@ -35,7 +35,7 @@ public class AsterixService {
         return null;
     }
 
-    public Character updateCharacterWithId(String id, Character character) {
+    public Character updateCharacterWithId(String id, NoIdCharacterDto character) {
         Optional<Character> optionalCharacter = characterRepo.findById(id);
         if (optionalCharacter.isPresent()) {
             Character characterToUpdate = optionalCharacter.get();
@@ -48,7 +48,7 @@ public class AsterixService {
             if (character.profession() == null) {
                 character = character.withProfession(characterToUpdate.profession());
             }
-            return characterRepo.save(character.withId(characterToUpdate.id()));
+            return characterRepo.save(new Character(characterToUpdate.id(), character.name(), character.age(), character.profession()));
         }
         return null;
     }

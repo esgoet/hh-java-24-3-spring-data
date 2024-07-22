@@ -1,9 +1,13 @@
 package com.github.esgoet.hhjava243springdata;
 
-public record CharacterCreationDto(
+import lombok.With;
+
+@With
+public record NoIdCharacterDto(
         String name,
         int age,
         String profession
 ) {
+
 
 }

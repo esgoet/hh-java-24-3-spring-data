@@ -17,7 +17,7 @@ public class AsterixController {
     }
 
     @PostMapping
-    public Character saveCharacter(@RequestBody CharacterCreationDto character) {
+    public Character saveCharacter(@RequestBody NoIdCharacterDto character) {
         return asterixService.saveCharacter(character);
     }
 
@@ -27,7 +27,7 @@ public class AsterixController {
     }
 
     @PutMapping("/{id}")
-    public Character updateCharacter(@PathVariable String id, @RequestBody Character character) {
+    public Character updateCharacter(@PathVariable String id, @RequestBody NoIdCharacterDto character) {
         return asterixService.updateCharacterWithId(id, character);
     }
 }
