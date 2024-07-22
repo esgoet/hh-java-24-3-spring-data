@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,14 +16,17 @@ public class AsterixService {
         return characterRepo.findAll();
     }
 
-    @PostMapping
     public Character saveCharacter(Character character) {
         Character characterToSave = character.withId(String.valueOf(findAllCharacters().size() + 1));
         return characterRepo.save(characterToSave);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteCharacterWithId(@PathVariable String id) {
-        characterRepo.deleteById(id);
+    public Character deleteCharacterWithId(@PathVariable String id) {
+        Optional<Character> characterToDelete = characterRepo.findById(id);
+        if (characterToDelete.isPresent()) {
+            characterRepo.delete(characterToDelete.get());
+            return characterToDelete.get();
+        }
+        return null;
     }
 }

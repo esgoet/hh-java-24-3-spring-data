@@ -22,8 +22,8 @@ public class AsterixController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCharacter(@PathVariable String id) {
-        asterixService.deleteCharacterWithId(id);
+    public Character deleteCharacter(@PathVariable String id) {
+        return asterixService.deleteCharacterWithId(id);
     }
 
 //    @PutMapping("/{id}")
