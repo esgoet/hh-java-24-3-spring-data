@@ -16,6 +16,13 @@ public class AsterixService {
         return characterRepo.findAll();
     }
 
+    public Character getCharacterById(String id) {
+        if (characterRepo.findById(id).isPresent()) {
+            return characterRepo.findById(id).get();
+        }
+        return null;
+    }
+
     public Character saveCharacter(NoIdCharacterDto character) {
         Character characterToSave = Character.builder()
                 .id(String.valueOf(findAllCharacters().size() + 1))

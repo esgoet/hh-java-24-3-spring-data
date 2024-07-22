@@ -16,6 +16,11 @@ public class AsterixController {
         return asterixService.findAllCharacters();
     }
 
+    @GetMapping("/{id}")
+    public Character getCharacter(@PathVariable String id) {
+        return asterixService.getCharacterById(id);
+    }
+
     @PostMapping
     public Character saveCharacter(@RequestBody NoIdCharacterDto character) {
         return asterixService.saveCharacter(character);
