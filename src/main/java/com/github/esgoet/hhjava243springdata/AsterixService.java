@@ -18,10 +18,8 @@ public class AsterixService {
     }
 
     public Character findCharacterById(String id) {
-        if (characterRepo.findById(id).isPresent()) {
-            return characterRepo.findById(id).get();
-        }
-        return null;
+        Optional<Character> optionalCharacter = characterRepo.findById(id);
+        return optionalCharacter.orElse(null);
     }
 
     public Character saveCharacter(NoIdCharacterDto character) {

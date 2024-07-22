@@ -34,7 +34,7 @@ class AsterixServiceTest {
         Character actual = asterixService.findCharacterById(character.id());
         //THEN
         Character expected = new Character("1","Asterix",35, "Krieger");
-        verify(characterRepo, times(2)).findById("1");
+        verify(characterRepo).findById("1");
         assertEquals(expected, actual);
     }
 
