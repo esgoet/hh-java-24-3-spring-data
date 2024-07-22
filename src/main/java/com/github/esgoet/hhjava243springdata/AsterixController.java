@@ -1,30 +1,43 @@
 package com.github.esgoet.hhjava243springdata;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/characters")
 public class AsterixController {
+    private final CharacterRepo characterRepo;
 
-    @GetMapping("/characters")
-    public List<Character> getAllCharacters() {
-        return List.of(
-                new Character("1", "Asterix", 35, "Krieger"),
-                new Character("2", "Obelix", 35, "Lieferant"),
-                new Character("3", "Miraculix", 60, "Druide"),
-                new Character("4", "Majestix", 60, "Häuptling"),
-                new Character("5", "Troubadix", 25, "Barden"),
-                new Character("6", "Gutemine", 35, "Häuptlingsfrau"),
-                new Character("7", "Idefix", 5, "Hund"),
-                new Character("8", "Geriatrix", 70, "Rentner"),
-                new Character("9", "Automatix", 35, "Schmied"),
-                new Character("10", "Grockelix", 35, "Fischer")
-        );
+    public AsterixController(CharacterRepo characterRepo ) {
+        this.characterRepo = characterRepo;
     }
 
+    @GetMapping
+    public List<Character> getAllCharacters() {
+        return characterRepo.findAll();
+    }
 
+    @PostMapping
+    public Character saveCharacter(@RequestBody Character character) {
+        Character characterToSave = character.withId(String.valueOf(getAllCharacters().size() + 1));
+        System.out.println(character);
+        System.out.println(characterToSave);
+        return characterRepo.save(characterToSave);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCharacter(@PathVariable String id) {
+        characterRepo.deleteById(id);
+    }
+
+//    @PutMapping("/{id}")
+//    public Character updateCharacter(@PathVariable String id, @RequestBody Character character) {
+//        Optional<Character> optionalCharacter = characterRepo.findById(id);
+//        optionalCharacter.ifPresent(characterToUpdate -> {
+//            characterRepo.save(character.withId(characterToUpdate.id()));
+//            return character.withId(characterToUpdate.id());
+//        });
+//        return null;
+//    }
 }
