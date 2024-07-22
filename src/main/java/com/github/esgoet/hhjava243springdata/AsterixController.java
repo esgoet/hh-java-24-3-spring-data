@@ -12,8 +12,8 @@ public class AsterixController {
     private final AsterixService asterixService;
 
     @GetMapping
-    public List<Character> getAllCharacters() {
-        return asterixService.findAllCharacters();
+    public List<Character> getAllCharacters(@RequestParam(defaultValue = "0") final Integer age) {
+        return asterixService.findAllCharacters(age);
     }
 
     @GetMapping("/{id}")

@@ -13,8 +13,8 @@ public class AsterixService {
     private final CharacterRepo characterRepo;
     private final IdService idService;
 
-    public List<Character> findAllCharacters() {
-        return characterRepo.findAll();
+    public List<Character> findAllCharacters(int age) {
+        return characterRepo.findCharactersByAgeAfter(age);
     }
 
     public Character getCharacterById(String id) {
